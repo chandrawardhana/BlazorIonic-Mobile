@@ -1,0 +1,42 @@
+﻿@inject NavigationManager NavigationManager
+<IonHeader>
+    <IonToolbar color="primary">
+        <IonTitle>Menu</IonTitle>
+    </IonToolbar>
+</IonHeader>
+
+<IonContent>
+    <IonList>
+        <IonListHeader>
+            Navigate
+        </IonListHeader>
+        <ion-menu-toggle auto-hide="false">
+            <IonItem href="">
+                <IonIcon slot="start" name='home'></IonIcon>
+                <IonLabel>
+                    Home
+                </IonLabel>
+            </IonItem>
+            <IonItem href="demo">
+                <IonIcon name="add-circle-outline" slot="start"></IonIcon>
+                <IonLabel>Ionic Demo</IonLabel>
+            </IonItem>
+            <IonItem href="inputs">
+                <IonIcon name="add-circle-outline" slot="start"></IonIcon>
+                <IonLabel>Inputs</IonLabel>
+            </IonItem>
+            <IonItem href="tabs">
+                <IonIcon name="add-circle-outline" slot="start"></IonIcon>
+                <IonLabel>Tabs</IonLabel>
+            </IonItem>
+            <IonItem href="select">
+                <IonIcon name="add-circle-outline" slot="start"></IonIcon>
+                <IonLabel>Select</IonLabel>
+            </IonItem>
+            <IonItem href="validation">
+                <IonIcon name="add-circle-outline" slot="start"></IonIcon>
+                <IonLabel>Validation</IonLabel>
+            </IonItem>
+        </ion-menu-toggle>
+    </IonList>
+</IonContent>

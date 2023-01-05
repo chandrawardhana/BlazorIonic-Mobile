@@ -1,0 +1,193 @@
+﻿@page "/inputs"
+@inject UIStateService UiStateService
+<IonContent fullscreen>
+    <IonList lines="full" class="ion-no-margin">
+        <IonListHeader lines="full">
+            <IonLabel>
+                Label Positions
+            </IonLabel>
+        </IonListHeader>
+        <IonItem>
+            <IonLabel>Default Label @Input1</IonLabel>
+            <IonInput placeholder="placeholder" @bind-Value="Input1"></IonInput>
+        </IonItem>
+        <IonItem>
+            <IonLabel position="fixed">Fixed Label</IonLabel>
+            <IonInput placeholder="placeholder" @bind-Value="Input1"></IonInput>
+        </IonItem>
+        <IonItem>
+            <IonLabel position="stacked">Stacked Label</IonLabel>
+            <IonInput placeholder="placeholder" @bind-Value="Input1"></IonInput>
+        </IonItem>
+        <IonItem>
+            <IonLabel position="floating">Floating Label</IonLabel>
+            <IonInput @bind-Value="Input1"></IonInput>
+        </IonItem>
+        <IonItem>
+            <IonSearchBar placeholder="Search bar" @bind-Value="Input1"></IonSearchBar>
+        </IonItem>
+    </IonList>
+
+    <IonList lines="full" class="ion-no-margin">
+        <IonListHeader lines="full">
+            <IonLabel>
+                Input Types
+            </IonLabel>
+        </IonListHeader>
+
+        <IonItem>
+            <IonLabel>Text Input</IonLabel>
+            <IonInput placeholder="placeholder" type="text" @bind-Value="Input1"></IonInput>
+        </IonItem>
+
+        <IonItem>
+            <IonLabel>Number Input @Input2</IonLabel>
+            <IonInput placeholder="placeholder" type="number" @bind-Value="Input2"></IonInput>
+        </IonItem>
+
+        <IonItem>
+            <IonLabel>Password Input</IonLabel>
+            <IonInput TItem="string" placeholder="placeholder" type="password" @bind-Value="Input1"></IonInput>
+        </IonItem>
+
+        <IonItem>
+            <IonLabel position="stacked">Multiple Inputs</IonLabel>
+            <IonInput TItem="string" placeholder="Address Line 1"></IonInput>
+            <IonInput TItem="string" placeholder="Address Line 2"></IonInput>
+            <IonInput TItem="string" placeholder="City"></IonInput>
+            <IonInput TItem="string" placeholder="State"></IonInput>
+            <IonInput TItem="string" placeholder="Zip Code"></IonInput>
+        </IonItem>
+
+        <IonItem>
+            <IonLabel position="stacked">Textarea</IonLabel>
+            <IonTextArea placeholder="placeholder"></IonTextArea>
+        </IonItem>
+
+        <IonItem>
+            <IonLabel>Date</IonLabel>
+            <IonDateTime display-format="h:mm A" picker-format="h:mm A"></IonDateTime>
+        </IonItem>
+    </IonList>
+    <IonList>
+        <IonListHeader lines="full">
+            <IonLabel>
+                Radio groups
+            </IonLabel>
+        </IonListHeader>
+        <IonRadioGroup @bind-Value="Input3">
+            <IonListHeader>
+                <IonLabel>Selected: @Input3</IonLabel>
+            </IonListHeader>
+
+            <IonItem>
+                <IonLabel>Biff</IonLabel>
+                <IonRadio slot="start" value="biff"></IonRadio>
+            </IonItem>
+
+            <IonItem>
+                <IonLabel>Griff</IonLabel>
+                <IonRadio slot="start" value="griff"></IonRadio>
+            </IonItem>
+            <IonItem>
+                <IonLabel>Buford</IonLabel>
+                <IonRadio slot="start" value="buford"></IonRadio>
+            </IonItem>
+        </IonRadioGroup>
+    </IonList>
+    <IonList>
+        <IonListHeader lines="full">
+            <IonLabel>
+                Segments
+            </IonLabel>
+        </IonListHeader>
+        <IonSegment @bind-Value="Input3">
+            <IonSegmentButton value="griff">
+                <IonLabel>Griff</IonLabel>
+            </IonSegmentButton>
+            <IonSegmentButton value="buford">
+                <IonLabel>Buford</IonLabel>
+            </IonSegmentButton>
+        </IonSegment>
+    </IonList>
+    <IonList>
+        <IonListHeader lines="full">
+            <IonLabel>
+                Checkboxes
+            </IonLabel>
+        </IonListHeader>
+
+        <IonItem>
+            <IonLabel>Jon Snow checkbox value:  @CheckboxValue</IonLabel> 
+            <IonCheckbox color="primary" @bind-Value="CheckboxValue" slot="start"></IonCheckbox>
+        </IonItem>
+    </IonList>
+    <IonList>
+        <IonListHeader lines="full">
+            <IonLabel>
+                Toggles
+            </IonLabel>
+        </IonListHeader>
+        <IonItem>
+            <IonLabel>Blueberry  @ToggleValue</IonLabel>
+            <IonToggle slot="start" name="blueberry" @bind-Value="ToggleValue"></IonToggle>
+        </IonItem>
+    </IonList>
+    <IonList>
+        <IonListHeader lines="full">
+            <IonLabel>
+                Ranges
+            </IonLabel>
+        </IonListHeader>
+        <IonItem>
+            <IonRange color="danger" pin="true"></IonRange>
+        </IonItem>
+
+        <IonItem>
+            <IonRange min="-200" max="200" color="secondary">
+                <IonLabel slot="start">-200</IonLabel>
+                <IonLabel slot="end">200</IonLabel>
+            </IonRange>
+        </IonItem>
+
+        <IonItem>
+            <IonRange min="20" max="80" step="2">
+                <IonIcon size="small" slot="start" name="sunny"></IonIcon>
+                <IonIcon slot="end" name="sunny"></IonIcon>
+            </IonRange>
+        </IonItem>
+
+        <IonItem>
+            <IonRange min="1000" max="2000" step="100" snaps="true" color="secondary"></IonRange>
+        </IonItem>
+
+        <IonItem>
+            <IonRange min="1000" max="2000" step="100" snaps="true" ticks="false" color="secondary"></IonRange>
+        </IonItem>
+
+        <IonItem>
+            <IonDualRange min="21" max="72" step="3" snaps="true"></IonDualRange>
+        </IonItem>
+    </IonList>
+
+</IonContent>
+
+
+@code {
+
+    public DateTimeOffset EndDate { get; set; } = new DateTimeOffset(2020,12,12,12,12,12, new TimeSpan(0));
+
+    protected override void OnInitialized()
+    {
+        UiStateService.Title = "Inputs";
+        base.OnInitialized();
+    }
+
+    public string Input1 { get; set; }
+    public int? Input2 { get; set; }
+    public string Input3 { get; set; }
+    public bool CheckboxValue {get; set; }
+    public bool ToggleValue {get; set; }
+
+
+}

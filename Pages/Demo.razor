@@ -1,0 +1,390 @@
+﻿@page "/demo"
+@inject UIStateService UiStateService
+
+<IonContent class="ion-padding">
+    <section>
+        <IonButton OnClick="ToggleLoader" expand="block">Toggle loader (currently @VisibleLoader)</IonButton>
+        <IonButton OnClick="ToggleAlert" expand="block">Toggle alert (currently @VisibleAlert)</IonButton>
+        <IonButton OnClick="ToggleModal" expand="block">Toggle modal (currently @VisibleModal)</IonButton>
+        <IonButton OnClick="ToggleActionSheet" expand="block">Toggle action sheet (currently @VisibleActionSheet)</IonButton>
+        <IonButton OnClick="TogglePicker" expand="block">Toggle picker (currently @VisiblePicker)</IonButton>
+        <IonButton OnClick="ToggleToast" expand="block">Toggle toast (currently @VisibleToast)</IonButton>
+        <IonButton OnClick="TogglePopover" expand="block">Toggle popover (currently @VisiblePopover)</IonButton>
+        <IonList>
+            @foreach (var log in Logs)
+            {
+                <IonItem>
+                    <IonLabel>
+                        @log
+                    </IonLabel>
+                </IonItem>
+            }
+        </IonList>
+    </section>
+    <IonModal @bind-Visible="@VisibleModal">
+        <IonHeader>
+            <IonToolbar>
+                <IonTitle>Modal Header</IonTitle>
+                <IonButtons slot="primary">
+                    <IonButton  OnClick="ToggleModal">
+                        <IonIcon slot="icon-only" name="close"></IonIcon>
+                    </IonButton>
+                </IonButtons>
+            </IonToolbar>
+        </IonHeader>
+        <IonContent class="ion-padding">
+            Modal Content
+
+        </IonContent>
+    </IonModal>
+
+    <IonPopover @bind-Visible="@VisiblePopover">
+        <IonList>
+            <IonListHeader>Ionic</IonListHeader>
+            <IonItem button>Learn Ionic</IonItem>
+            <IonItem button>Documentation </IonItem>
+            <IonItem button>Showcase</IonItem>
+            <IonItem button>GitHub Repo</IonItem>
+            <IonItem lines="none" detail="false" @onclick="TogglePopover" button  >Close</IonItem>
+        </IonList>
+    </IonPopover>
+    <IonLoading @bind-Visible="@VisibleLoader" message="eeee" backdrop-dismiss="true"></IonLoading>
+    <IonAlert @bind-Visible="@VisibleAlert" message="eeee" Buttons="buttons" Inputs="inputs" backdrop-dismiss="true"></IonAlert>
+    <IonActionSheet @bind-Visible="@VisibleActionSheet" Buttons="actionSheetButtons" header="An action sheet!"></IonActionSheet>
+    <IonPicker @bind-Visible="@VisiblePicker" Buttons="pickerButtons" Columns="pickerColumns"></IonPicker>
+    <IonToast @bind-Visible="@VisibleToast" Buttons="toastButtons"></IonToast>
+</IonContent>
+
+@code {
+
+    public IonAlert.IonAlertButton[] buttons;
+    public IonActionSheet.IonActionSheetButton[] actionSheetButtons;
+    public IonPicker.IonPickerButton[] pickerButtons;
+    public IonToast.IonToastButton[] toastButtons;
+    public IonPicker.IonPickerColumn[] pickerColumns;
+    public IonAlert.IonAlertInput[] inputs;
+    public List<string> Logs = new List<string>();
+    private bool _visibleAlert;
+    private bool _visibleActionSheet;
+    private bool _visibleModal;
+    private bool _visibleLoader;
+    private bool _visiblePicker;
+    private bool _visibleToast;
+    private bool _visiblePopover;
+
+    public bool VisiblePopover
+    {
+        get => _visiblePopover;
+        set
+        {
+            Logs.Add($"VisiblePopover {value}");
+            _visiblePopover = value;
+        }
+    }
+
+    public bool VisibleToast
+    {
+        get => _visibleToast;
+        set
+        {
+            Logs.Add($"VisibleToast {value}");
+            _visibleToast = value;
+        }
+    }
+
+    public bool VisibleLoader
+    {
+        get => _visibleLoader;
+        set
+        {
+            Logs.Add($"VisibleLoaderChanged {value}");
+            _visibleLoader = value;
+        }
+    }
+
+    public bool VisiblePicker
+    {
+        get => _visiblePicker;
+        set
+        {
+            Logs.Add($"VisiblePickerChanged {value}");
+            _visiblePicker = value;
+        }
+    }
+
+    public bool VisibleAlert
+    {
+        get => _visibleAlert;
+        set
+        {
+            Logs.Add($"VisibleAlertChanged {value}");
+            _visibleAlert = value;
+        }
+    }
+
+    public bool VisibleActionSheet
+    {
+        get => _visibleActionSheet;
+        set
+        {
+            Logs.Add($"VisibleActionSheetChanged {value}");
+            _visibleActionSheet = value;
+        }
+    }
+
+    public bool VisibleModal
+    {
+        get => _visibleModal;
+        set
+        {
+            Logs.Add($"VisibleModalChanged {value}");
+            _visibleModal = value;
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        UiStateService.Title = "Demo Components";
+        buttons = new[]
+        {
+            new IonAlert.IonAlertButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "a button!"},
+                    {"role", "customrole"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"1st option clicked! {(vals)}");
+                    return Task.CompletedTask;
+                }
+            },
+            new IonAlert.IonAlertButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "Cancel"},
+                    {"role", "cancel"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"cancel clicked! {vals}");
+                    return Task.CompletedTask;
+                }
+            }
+        };
+        actionSheetButtons = new[]
+        {
+            new IonActionSheet.IonActionSheetButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "a button!"},
+                    {"icon", "caret-forward-circle"},
+                    {"role", "customrole"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"1st option clicked! {(vals)}");
+                    return Task.CompletedTask;
+                }
+            },
+            new IonActionSheet.IonActionSheetButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "Cancel"},
+                    {"icon", "cancel"},
+                    {"role", "cancel"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"cancel clicked! {vals}");
+                    return Task.CompletedTask;
+                }
+            }
+        };
+
+        toastButtons = new[]
+        {
+            new IonToast.IonToastButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "a button!"},
+                    {"icon", "caret-forward-circle"},
+                    {"role", "customrole"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"1st option clicked! {(vals)}");
+                    return Task.CompletedTask;
+                }
+            },
+            new IonToast.IonToastButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "Cancel"},
+                    {"icon", "cancel"},
+                    {"role", "cancel"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"cancel clicked! {vals}");
+                    return Task.CompletedTask;
+                }
+            }
+        };
+        inputs = new[]
+        {
+            new IonAlert.IonAlertInput()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"type", "text"},
+                    {"label", "Please tell us about yourself"},
+                    {"placeholder", "14/f/cali"},
+                    {"name", "personalDescription"},
+                    {"id", "alert-personalDescription"}
+                }
+            }
+        };
+        pickerButtons = new[]
+        {
+            new IonPicker.IonPickerButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "a button!"},
+                    {"role", "customrole"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"1st option clicked! {(vals)}");
+                    return Task.CompletedTask;
+                }
+            },
+            new IonPicker.IonPickerButton()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"text", "Cancel"},
+                    {"role", "cancel"}
+                },
+                Handler = o =>
+                {
+                    var vals = string.Join(",", o.Options.Select(pair => $"{pair.Key}={pair.Value}").ToArray());
+                    Logs.Add($"cancel clicked! {vals}");
+                    return Task.CompletedTask;
+                }
+            }
+        };
+        pickerColumns = new[]
+        {
+            new IonPicker.IonPickerColumn()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"name", "columntopick"},
+                    {
+                        "options", new[]
+                        {
+                            new
+                            {
+                                text = "option 1",
+                                value = "value1",
+                                selected = false
+                            },
+                            new
+                            {
+                                text = "option 2",
+                                value = "value2",
+                                selected = false
+                            },
+                            new
+                            {
+                                text = "option 3",
+                                value = "value3",
+                                selected = true
+                            }
+                        }
+                    }
+                }
+            },
+            new IonPicker.IonPickerColumn()
+            {
+                Options = new Dictionary<string, object>()
+                {
+                    {"name", "columntopick2"},
+                    {"selectedIndex", 1},
+                    {
+                        "options", new[]
+                        {
+                            new
+                            {
+                                text = "option2 1",
+                                value = "value21"
+                            },
+                            new
+                            {
+                                text = "option2 2",
+                                value = "value22"
+                            },
+                            new
+                            {
+                                text = "option2 3",
+                                value = "value23"
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        StateHasChanged();
+    }
+
+    private void ToggleLoader()
+    {
+        VisibleLoader = !VisibleLoader;
+    }
+
+    private void ToggleAlert()
+    {
+        VisibleAlert = !VisibleAlert;
+    }
+
+    private void ToggleModal()
+    {
+        VisibleModal = !VisibleModal;
+    }
+
+    private void ToggleActionSheet()
+    {
+        VisibleActionSheet = !VisibleActionSheet;
+    }
+
+    private void TogglePicker()
+    {
+        VisiblePicker = !VisiblePicker;
+    }
+
+    private void ToggleToast()
+    {
+        VisibleToast = !VisibleToast;
+    }
+
+    private void TogglePopover()
+    {
+        VisiblePopover = !VisiblePopover;
+    }
+
+}

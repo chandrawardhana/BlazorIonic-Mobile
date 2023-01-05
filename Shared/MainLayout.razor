@@ -1,0 +1,47 @@
+﻿@inherits LayoutComponentBase
+@implements IDisposable
+@inject UIStateService StateService
+<IonSplitPane when="sm" content-id="main-content">
+    <ion-menu content-id="main-content">
+    <NavMenu/>
+    </ion-menu>
+
+    <IonPage class="IonPage" id="main-content">
+        <IonHeader>
+            <IonToolbar>
+                <IonButtons slot="start">
+                    <IonMenuButton></IonMenuButton>
+                </IonButtons>
+
+                <IonButtons slot="end">
+                    <IonButton  href="http://blazor.net" target="_blank">About</IonButton>
+                </IonButtons>
+
+              @*  <IonTitle>@StateService.Title</IonTitle>*@
+            </IonToolbar>
+        </IonHeader>
+        @Body
+    </IonPage>
+
+</IonSplitPane>
+
+
+@code{
+    protected override void OnAfterRender(bool firstRender)
+    {
+        base.OnAfterRender(firstRender);
+        if (firstRender)
+            StateService.StateChanged += OnStateServiceOnStateChanged;
+    }
+
+    private void OnStateServiceOnStateChanged()
+    {
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        StateService.StateChanged -= OnStateServiceOnStateChanged;
+    }
+
+}
